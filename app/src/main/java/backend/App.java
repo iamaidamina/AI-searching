@@ -9,8 +9,8 @@ public class App {
   
     public static void main(String[] args) {
         
-        String strBoard =  FileManager.upload("app/src/main/resources/Prueba1.txt");
-        StringToArrayOfStrings.convert(strBoard).toString();
+        String sourceStr =  FileManager.upload("app/src/main/resources/Prueba1.txt");
+        StringToMatrixOfStrings.convert(sourceStr, 10, 10);
 
            
         new MainFrame();
