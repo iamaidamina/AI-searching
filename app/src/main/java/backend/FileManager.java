@@ -8,8 +8,9 @@ public class FileManager {
     
 
    
-    public static String upload(String filePath)
+    public static String upload(String fileName)
     {
+        String filePath = "app/src/main/resources/"+fileName;
         String data ="";
       
         try {

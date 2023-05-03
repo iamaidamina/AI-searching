@@ -3,15 +3,17 @@
  */
 package backend;
 
+import java.util.Arrays;
+
 import frontend.MainFrame;
 
 public class App {
   
     public static void main(String[] args) {
         
-        String sourceStr =  FileManager.upload("app/src/main/resources/Prueba1.txt");
-        StringToMatrixOfStrings.convert(sourceStr, 10, 10);
-
+        String sourceStr =  FileManager.upload("Prueba1.txt");
+        Box [][] boxes =Convert.stringToBox2DArray(sourceStr, 10, 10);
+        Printer.show(boxes);
            
         new MainFrame();
         

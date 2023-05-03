@@ -2,37 +2,27 @@ package backend;
 
 public class Box {
 
+    private Integer id;
     private String name;
-    private String id;
     private String color;
-    private int cost;
 
-    public Box(String name, String id, String color, int cost)
-    {
-        this.name = name;
+    public Box(Integer id, String name, String color) {
         this.id = id;
+        this.name = name;
         this.color = color;
-        this.cost = cost;
-
     }
 
+    public Integer getId() {
+        return id;
+    }
     public String getName() {
         return name;
     }
-
-    public String getId() {
-        return id;
-    }
-
+   
     public String getColor() {
         return color;
     }
-
-    public int getCost() {
-        return cost;
-    }
-
+   
     
 
-    
 }
