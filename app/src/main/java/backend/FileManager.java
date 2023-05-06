@@ -10,7 +10,7 @@ public class FileManager {
    
     public static String upload(String fileName)
     {
-        String filePath = "app/src/main/resources/"+fileName;
+        String filePath = "C:\\Users\\crist\\Downloads\\Goku-Smart\\app\\src\\main\\resources\\"+fileName;
         String data ="";
       
         try {
