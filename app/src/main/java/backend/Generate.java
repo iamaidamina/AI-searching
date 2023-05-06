@@ -3,7 +3,7 @@ package backend;
 public class Generate {
 
 
-    public static DynamicBox dynamicBox(Integer id)
+    public static AvailableBox availableBox(Integer id)
     {
        
         String name = null, color= null;
@@ -18,6 +18,21 @@ public class Generate {
                 name =  "Start";
                 color = "#2E86C1";
                 break;
+
+        }
+
+        return new AvailableBox(id,name,color);
+        
+    }
+    
+    
+    public static DynamicBox dynamicBox(Integer id)
+    {
+       
+        String name = null, color= null;
+
+        switch(id)
+        {
             case 5:
                 name =  "Seed";
                 color = "#808000";
@@ -28,9 +43,8 @@ public class Generate {
                 break;
 
         }
-
-        return new DynamicBox(id,name,color);
         
+        return new DynamicBox(id,name,color);
     }
     
     public static Box box(Integer id)
@@ -53,7 +67,7 @@ public class Generate {
         
     }
 
-    public static Enemy enemy(Integer id)
+    public static EnemyBox enemyBox(Integer id)
     {
         String name = null, color = null;  Integer damage = null; 
 
@@ -73,7 +87,7 @@ public class Generate {
 
         }
 
-        return new Enemy(id,name,color,damage) ;
+        return new EnemyBox(id,name,color,damage) ;
         
     }
     

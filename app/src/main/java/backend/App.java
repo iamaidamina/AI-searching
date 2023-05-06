@@ -19,8 +19,8 @@ public class App {
         
         Integer board[][] = {{0,1,0,5},
                 {1,0,0,1},
-                {1,2,0,4},
-                {4,3,0,0}};
+                {1,2,0,6},
+                {6,3,0,0}};
         Agent agent = new Agent("Goku");
         Environment environment = new Environment(board,boxes);
         Search search = new Search(environment, agent);

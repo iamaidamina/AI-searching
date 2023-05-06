@@ -39,12 +39,16 @@ public class Convert{
                 	 box2DArray[i][j]  = Generate.box(int2DArray[i][j]);
                 }
             	else
-            	if(int2DArray[i][j] == 3 || int2DArray[i][j] == 4 )
-                {
-                    box2DArray[i][j]  = Generate.enemy(int2DArray[i][j]);
+            	if(int2DArray[i][j] == 3 || int2DArray[i][j] == 4 ){
+            		
+                    box2DArray[i][j]  = Generate.enemyBox(int2DArray[i][j]);
 
-                }else{
-                    box2DArray[i][j] = Generate.dynamicBox(int2DArray[i][j]);
+                }else
+                if(int2DArray[i][j] == 0 || int2DArray[i][j] == 2 ){
+                    box2DArray[i][j] = Generate.availableBox(int2DArray[i][j]);
+                }else
+                {
+                	box2DArray[i][j] = Generate.dynamicBox(int2DArray[i][j]);
                 }
                 
             

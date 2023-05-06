@@ -1,23 +1,21 @@
 package backend;
 
-public class DynamicBox extends Box {
-	
-	private Boolean isTried;
-	
-	public DynamicBox(Integer id, String name, String color) {
+public class DynamicBox extends AvailableBox {
 
-        super(id,name,color);
-        this.isTried = false;
-        
-    }
+	 private Boolean isRemove;
+	 
+	public DynamicBox(Integer id, String name, String color) {
+		super(id, name, color);
+		this.isRemove = false;
+		
+	}
 	
-    public void setTried() {
-        this.isTried = !isTried;
+    public Boolean getIsRemove() {
+        return isRemove;
     }
-    
-    public Boolean getIsTried() {
-        return isTried;
+
+    public void setIsRemove() {
+        this.isRemove = !this.isRemove;
     }
-   
 
 }

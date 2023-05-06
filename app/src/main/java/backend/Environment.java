@@ -23,9 +23,12 @@ public class Environment {
 
     public void update(Position newPosition)
     {
-   
-      
-        board[newPosition.getI()][newPosition.getJ()]= TRIED;
+    	
+    	AvailableBox availableBox = (AvailableBox) boxes[newPosition.getI()][newPosition.getJ()];
+    	availableBox.setTried();//NO PERMITE REPETIR CELDAS
+   	
+    	
+       // board[newPosition.getI()][newPosition.getJ()]= TRIED;
         
         
         
