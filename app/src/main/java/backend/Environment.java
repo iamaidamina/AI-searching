@@ -3,51 +3,64 @@ package backend;
 
 public class Environment {
 
-    private Integer [][] board;
+
     private Box [][] boxes;
- 
+   
+    public static final Integer FREEZER =3;
+    public static final Integer CELL =4;
+    public static final Integer SEED =5;
+    public static final Integer DRAGON_BALL =6;
+   
 
 
-    public static final Integer TRIED =10;
-    //public static final Integer START_ =2;//real
-    //public static final Integer START =5;
-    public static final Integer PATH =11;
 
-    public Environment(Integer[][] board, Box [][] boxes)
+    public Environment( Box [][] boxes)
     {
-        this.board = board;
+   
         this.boxes = boxes;
 ;
         
     }
 
-    public void update(Position newPosition)
+    public void update(Position newPosition, Agent agent)
     {
     	
     	AvailableBox availableBox = (AvailableBox) boxes[newPosition.getI()][newPosition.getJ()];
     	availableBox.setTried();//NO PERMITE REPETIR CELDAS
-   	
     	
-       // board[newPosition.getI()][newPosition.getJ()]= TRIED;
+    	if(availableBox.getId() == DRAGON_BALL){removeBox(newPosition, DRAGON_BALL, agent);}
+    	if(availableBox.getId() == SEED){removeBox(newPosition, SEED, agent);}
+   	
+    
         
         
         
 
     }
-
-    public void markPath(Position coordenate)
+    
+    private void removeBox(Position newPosition, Integer id, Agent agent)
     {
-  
-                board[coordenate.getI()][coordenate.getJ()]= PATH;
-    
-        
-
+    	DynamicBox dynamicBox = (DynamicBox) boxes[newPosition.getI()][newPosition.getJ()];
+    	
+    	dynamicBox.setIsRemove();
+    	switch(id)
+    	{
+    		case 5:
+    			agent.takeSeed();
+    			Printer.show("--- Seed Finded ----");
+    			break;
+    		case 6:
+    			Printer.show("--- Dragon Ball Finded ----");
+    			break;
+    	
+    	}
+    		
+    	
     }
-
-    public Integer[][] getBoard() {
-        return board;
-    }
     
+    
+
+
     public Box[][] getBoxes() {
         return boxes;
     }

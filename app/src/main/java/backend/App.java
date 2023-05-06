@@ -14,15 +14,8 @@ public class App {
         String sourceStr =  FileManager.upload("Prueba1.txt");
         Box [][] boxes =Convert.stringToBox2DArray(sourceStr);
         Printer.show(boxes);
-        
-       
-        
-        Integer board[][] = {{0,1,0,5},
-                {1,0,0,1},
-                {1,2,0,6},
-                {6,3,0,0}};
         Agent agent = new Agent("Goku");
-        Environment environment = new Environment(board,boxes);
+        Environment environment = new Environment(boxes);
         Search search = new Search(environment, agent);
         search.traverse();
        

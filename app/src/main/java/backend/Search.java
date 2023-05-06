@@ -18,12 +18,10 @@ public class Search implements ISearch{
     
  
     
-    private void doMove(Position agentPosition, Position newPosition)
+    private void doMove(Position agentPosition, Position newPosition, Agent agent)
     {
       
-                 environment.update(newPosition);
-                     
-                 //environment.markPath(agentPosition);//candidato a eliminación
+                 environment.update(newPosition, agent);
                   path.add(agentPosition);
 
     }
@@ -34,11 +32,10 @@ public class Search implements ISearch{
     	 if(thereAreValidMovements)
          {
              Printer.show("Success");
-             Printer.show(environment.getBoard());
-
+            
          }else{
              Printer.show("There are not valid movements!");
-             Printer.show(environment.getBoard());
+           
 
          }
     }
@@ -72,7 +69,7 @@ public class Search implements ISearch{
             if(Validate.isValidMovement(environment.getBoxes(), leftPosition))
             {
             	
-                doMove(agentPosition, leftPosition);
+                doMove(agentPosition, leftPosition, agent);
                 agentPosition= leftPosition;
                 Printer.show("Agent move left");
 
@@ -80,7 +77,7 @@ public class Search implements ISearch{
             //if(Validate.isValidMovement(environment.getBoard(), rigthPosition))
             if(Validate.isValidMovement(environment.getBoxes(), rigthPosition))
             {
-                doMove(agentPosition, rigthPosition);
+                doMove(agentPosition, rigthPosition, agent);
                 agentPosition= rigthPosition;
                 Printer.show("Agent move rigth");
 
@@ -88,7 +85,7 @@ public class Search implements ISearch{
             //if(Validate.isValidMovement(environment.getBoard(), upPosition))
             if(Validate.isValidMovement(environment.getBoxes(), upPosition))
             {//;
-                doMove(agentPosition, upPosition);
+                doMove(agentPosition, upPosition, agent);
                 agentPosition= upPosition;
                 Printer.show("Agent move up");
 
@@ -96,7 +93,7 @@ public class Search implements ISearch{
             //if(Validate.isValidMovement(environment.getBoard(), downPosition))
             if(Validate.isValidMovement(environment.getBoxes(), downPosition))
             {//;
-                doMove(agentPosition, downPosition);
+                doMove(agentPosition, downPosition, agent);
                 agentPosition= downPosition;
                 Printer.show("Agent move down");
 
