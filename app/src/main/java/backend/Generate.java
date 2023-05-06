@@ -3,21 +3,16 @@ package backend;
 public class Generate {
 
 
-    public static Box box(Integer id)
+    public static DynamicBox dynamicBox(Integer id)
     {
        
-        String name = null;
-        String color= null;
+        String name = null, color= null;
 
         switch(id)
         {
             case 0:
                 name = "Free";
                 color = "#F8F9F9";
-                break;
-            case 1:
-                name =  "Wall";
-                color = "#E67E22";
                 break;
             case 2:
                 name =  "Start";
@@ -34,15 +29,33 @@ public class Generate {
 
         }
 
+        return new DynamicBox(id,name,color);
+        
+    }
+    
+    public static Box box(Integer id)
+    {
+       
+        String name = null, color= null;
+
+        switch(id)
+        {
+         
+            case 1:
+                name =  "Wall";
+                color = "#E67E22";
+                break;
+            
+
+        }
+
         return new Box(id,name,color);
         
     }
 
     public static Enemy enemy(Integer id)
     {
-        String name = null;
-        String color = null;
-        Integer damage = null; 
+        String name = null, color = null;  Integer damage = null; 
 
         switch(id)
         {

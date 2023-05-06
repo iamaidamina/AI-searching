@@ -1,6 +1,6 @@
 package backend;
 
-public class Enemy extends Box{
+public class Enemy extends DynamicBox{
 
 
     private Boolean isRemove;
