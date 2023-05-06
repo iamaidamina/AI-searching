@@ -2,22 +2,20 @@ package backend;
 
 public class Convert{
 
-    private static Integer [][] stringToInt2DArray(String sourceStr, int rows, int colums)
+    private static Integer [][] stringToInt2DArray(String sourceStr)
     {
-        Integer int2DArray[][] = new Integer [rows][colums]; 
+         
         String  stringArray[] = sourceStr.split(" ");
-
-        int row=0;
-        int colum =0; 
+        Integer size = (int) Math.sqrt(stringArray.length);
+        Integer int2DArray[][] = new Integer [size][size];
+        int row=0, colum=0; 
+        
         for (int i = 0; i < stringArray.length; i++) {
+        	
             int2DArray[row][colum] = Integer.parseInt(stringArray[i]);
-           if((i+1)%10 ==0)
-           {
-            row++;
-            colum =0;
-           }else{
-            colum++;
-           }
+            
+           if((i+1)%size ==0){ row++; colum =0;
+           }else{ colum++;}
            
         }
 
@@ -26,9 +24,9 @@ public class Convert{
 
     }
 
-    public static Box [][] stringToBox2DArray(String sourceStr, int rows, int colums)
+    public static Box [][] stringToBox2DArray(String sourceStr)
     {
-        Integer[][] int2DArray = stringToInt2DArray(sourceStr, rows, colums);
+        Integer[][] int2DArray = stringToInt2DArray(sourceStr);
 
         Box box2DArray[][] = new Box [int2DArray.length][int2DArray[0].length]; 
       

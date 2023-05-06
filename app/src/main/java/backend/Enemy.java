@@ -3,7 +3,7 @@ package backend;
 public class Enemy extends Box{
 
 
-    private Boolean isAvailable;
+    private Boolean isRemove;
     private Integer damage;
 
     
@@ -11,16 +11,16 @@ public class Enemy extends Box{
 
         super(id,name,color);
         this.damage = damage;
-        this.isAvailable = true;
+        this.isRemove = false;
         
     }
 
-    public Boolean getIsAvailable() {
-        return isAvailable;
+    public Boolean getIsRemove() {
+        return isRemove;
     }
 
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setIsRemove() {
+        this.isRemove = !this.isRemove;
     }
 
     public Integer getDamage() {

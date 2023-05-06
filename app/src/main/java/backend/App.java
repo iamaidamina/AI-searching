@@ -10,11 +10,22 @@ import frontend.MainFrame;
 public class App {
   
     public static void main(String[] args) {
-        
+       
         String sourceStr =  FileManager.upload("Prueba1.txt");
-        Box [][] boxes =Convert.stringToBox2DArray(sourceStr, 10, 10);
+        Box [][] boxes =Convert.stringToBox2DArray(sourceStr);
         Printer.show(boxes);
-           
+        
+       
+        
+        Integer board[][] = {{0,1,0,5},
+                {1,0,0,1},
+                {1,2,0,4},
+                {4,3,0,0}};
+        Agent agent = new Agent("Goku");
+        Environment environment = new Environment(board,boxes);
+        Search search = new Search(environment, agent);
+        search.traverse();
+       
         new MainFrame();
         
         
