@@ -28,9 +28,10 @@ public class Environment {
     	AvailableBox availableBox = (AvailableBox) boxes[newPosition.getI()][newPosition.getJ()];
     	availableBox.setTried();//NO PERMITE REPETIR CELDAS
     	
-    	if(availableBox.getId() == DRAGON_BALL){removeBox(newPosition, DRAGON_BALL, agent);}
-    	if(availableBox.getId() == SEED){removeBox(newPosition, SEED, agent);}
-   	
+    	if(availableBox.getId() == DRAGON_BALL){removeDynamicBox(newPosition, DRAGON_BALL, agent);}
+    	if(availableBox.getId() == SEED){removeDynamicBox(newPosition, SEED, agent);}
+    	if(availableBox.getId() == CELL){removeEnemyBox(newPosition, CELL, agent);}
+    	if(availableBox.getId() == FREEZER){removeEnemyBox(newPosition, FREEZER, agent);}
     
         
         
@@ -38,7 +39,7 @@ public class Environment {
 
     }
     
-    private void removeBox(Position newPosition, Integer id, Agent agent)
+    private void removeDynamicBox(Position newPosition, Integer id, Agent agent)
     {
     	DynamicBox dynamicBox = (DynamicBox) boxes[newPosition.getI()][newPosition.getJ()];
     	
@@ -58,6 +59,31 @@ public class Environment {
     	
     }
     
+    private void removeEnemyBox(Position newPosition, Integer id, Agent agent)
+    {
+    	EnemyBox enemyBox = (EnemyBox) boxes[newPosition.getI()][newPosition.getJ()];
+    	
+    	
+    	switch(id)
+    	{
+    		case 3:
+    			
+    			Printer.show("--- Freezer Finded ----");
+    			break;
+    		case 4:
+    			Printer.show("--- Cell Finded ----");
+    			break;
+    	
+    	}
+    	if(agent.getAmountCollectedSeeds()>0)
+    	{
+    		enemyBox.setIsRemove();
+        	agent.loseSeed();
+    		
+    	}
+    		
+    	
+    }
     
 
 
