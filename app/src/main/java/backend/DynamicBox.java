@@ -15,7 +15,7 @@ public class DynamicBox extends AvailableBox {
     }
 
     public void setIsRemove() {
-        this.isRemove = !this.isRemove;
+        this.isRemove = true;
     }
 
 }

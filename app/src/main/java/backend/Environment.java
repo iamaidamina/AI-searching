@@ -6,10 +6,12 @@ public class Environment {
 
     private Box [][] boxes;
    
+    public static final Integer FREE =0;
     public static final Integer FREEZER =3;
     public static final Integer CELL =4;
     public static final Integer SEED =5;
     public static final Integer DRAGON_BALL =6;
+
    
 
 
@@ -26,7 +28,7 @@ public class Environment {
     {
     	
     	AvailableBox availableBox = (AvailableBox) boxes[newPosition.getI()][newPosition.getJ()];
-    	availableBox.setTried();//NO PERMITE REPETIR CELDAS
+    	availableBox.increseVisits();//NO PERMITE REPETIR CELDAS
     	
     	if(availableBox.getId() == DRAGON_BALL){removeDynamicBox(newPosition, DRAGON_BALL, agent);}
     	if(availableBox.getId() == SEED){removeDynamicBox(newPosition, SEED, agent);}
@@ -41,9 +43,7 @@ public class Environment {
     
     private void removeDynamicBox(Position newPosition, Integer id, Agent agent)
     {
-    	DynamicBox dynamicBox = (DynamicBox) boxes[newPosition.getI()][newPosition.getJ()];
     	
-    	dynamicBox.setIsRemove();
     	switch(id)
     	{
     		case 5:
@@ -55,6 +55,10 @@ public class Environment {
     			break;
     	
     	}
+    	boxes[newPosition.getI()][newPosition.getJ()]= Generate.availableBox(FREE);
+    	AvailableBox availableBox = (AvailableBox)boxes[newPosition.getI()][newPosition.getJ()];
+    	availableBox.increseVisits();
+ 
     		
     	
     }
@@ -77,7 +81,9 @@ public class Environment {
     	}
     	if(agent.getAmountCollectedSeeds()>0)
     	{
-    		enemyBox.setIsRemove();
+    		boxes[newPosition.getI()][newPosition.getJ()]= Generate.availableBox(FREE);
+        	AvailableBox availableBox = (AvailableBox)boxes[newPosition.getI()][newPosition.getJ()];
+        	availableBox.increseVisits();
         	agent.loseSeed();
     		
     	}

@@ -2,21 +2,21 @@ package backend;
 
 public class AvailableBox extends Box {
 	
-	private Boolean isTried;
+	private Integer visitsCounter;
 	
 	public AvailableBox(Integer id, String name, String color) {
 
         super(id,name,color);
-        this.isTried = false;
+        this.visitsCounter = 0;
         
     }
 	
-    public void setTried() {
-        this.isTried = !isTried;
+    public void increseVisits() {
+    	visitsCounter++;
     }
     
-    public Boolean getIsTried() {
-        return isTried;
+    public Integer howManyVsits() {
+        return visitsCounter;
     }
    
 
