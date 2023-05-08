@@ -22,6 +22,7 @@ public class Search implements ISearch{
     {
       
                  environment.update(newPosition, agent);
+                 path.add(agentPosition);
                   
 
     }
@@ -42,24 +43,50 @@ public class Search implements ISearch{
          }
     }
     
+    private Position reverse()
+    {
+    	 Position leftPosition = null, rigthPosition = null, upPosition = null, downPosition = null;
+    	 Boolean leftIsValid =false, rightIsValid =false, upIsValid =false, downIsValid =false;
+    	 Boolean isValid=leftIsValid ||rightIsValid || upIsValid || downIsValid;
+    	 int i= path.size()-1;
+    	 Position agentPosition = null;
+    	 while (!isValid && i>=0) 
+         {
+    		 agentPosition = path.get(i);
+    		 
+    		 
+    		 leftPosition = agent.propuseMove(agentPosition, new Position(0, -1));//left
+             rigthPosition = agent.propuseMove(agentPosition, new Position(0, 1));//right
+             upPosition = agent.propuseMove(agentPosition, new Position(-1, 0));//up
+             downPosition = agent.propuseMove(agentPosition, new Position(1, 0));//down
+             
+             leftIsValid =Validate.isValidMovement(environment.getBoxes(), leftPosition, agentPosition);
+             rightIsValid =Validate.isValidMovement(environment.getBoxes(), rigthPosition, agentPosition);
+             upIsValid =Validate.isValidMovement(environment.getBoxes(), upPosition, agentPosition);		
+             downIsValid =Validate.isValidMovement(environment.getBoxes(), downPosition, agentPosition);
+             isValid=leftIsValid ||rightIsValid || upIsValid || downIsValid;
+             i--;
+             
+         }
+    	return agentPosition;
+    }
  
 
     @Override
     public void traverse() {
     
-        //Position agentPosition = Locate.getPosition(environment.getBoard(),5);//Anterior
+
         Position agentPosition = Locate.getPosition(environment.getBoxes(),2);//Nuevo
         
         Position leftPosition = null, rigthPosition = null, upPosition = null, downPosition = null;
         Boolean thereAreValidMovements = true;
-        //Boolean isSolved = Validate.isSolved(environment.getBoard(), 6);//Anterior
-        Boolean isSolved = Validate.isSolved(environment.getBoxes(), 6); //Nuevo
+
         Integer counter = 1;
 
       
-        while(!isSolved && thereAreValidMovements)
+        while(!Validate.isSolved(environment.getBoxes(), 6) && thereAreValidMovements)
         {
-        	path.add(agentPosition);
+        	
             Printer.show("Iteración: "+ counter);
 
             Printer.show("Posicion inicial Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
@@ -68,47 +95,53 @@ public class Search implements ISearch{
             upPosition = agent.propuseMove(agentPosition, new Position(-1, 0));//up
             downPosition = agent.propuseMove(agentPosition, new Position(1, 0));//down
             
-            Position oldPosition = path.get(path.size()-1);
+
           
-            if(Validate.isValidMovement(environment.getBoxes(), leftPosition, agentPosition, oldPosition))
+            if(Validate.isValidMovement(environment.getBoxes(), leftPosition, agentPosition))
             {
             	
                 doMove(agentPosition, leftPosition, agent);
                 agentPosition= leftPosition;
                 Printer.show("Agent move left");
+                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
 
             }else 
          
-            if(Validate.isValidMovement(environment.getBoxes(), rigthPosition, agentPosition, oldPosition))
+            if(Validate.isValidMovement(environment.getBoxes(), rigthPosition, agentPosition))
             {
                 doMove(agentPosition, rigthPosition, agent);
                 agentPosition= rigthPosition;
                 Printer.show("Agent move rigth");
+                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
 
             }else
-            if(Validate.isValidMovement(environment.getBoxes(), upPosition, agentPosition, oldPosition))
+            if(Validate.isValidMovement(environment.getBoxes(), upPosition, agentPosition))
             {//;
                 doMove(agentPosition, upPosition, agent);
                 agentPosition= upPosition;
                 Printer.show("Agent move up");
+                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
 
             }else 
-            if(Validate.isValidMovement(environment.getBoxes(), downPosition, agentPosition, oldPosition))
+            if(Validate.isValidMovement(environment.getBoxes(), downPosition, agentPosition))
             {
                 doMove(agentPosition, downPosition, agent);
                 agentPosition= downPosition;
                 Printer.show("Agent move down");
+                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
 
             }else{
-                
-                thereAreValidMovements = false;
+
+                path.add(agentPosition);
+                agentPosition =reverse();
+                //thereAreValidMovements = false;
+                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
             }
            
-            isSolved = Validate.isSolved(environment.getBoxes(), 6);
             counter++;
-            Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
+            
         }
-        
+        path.add(agentPosition);
         showFinalResult(thereAreValidMovements);
         Printer.show(path);
             

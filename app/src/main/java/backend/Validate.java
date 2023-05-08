@@ -28,17 +28,13 @@ public class Validate {
 
     }
     
-    private static Boolean isAvailableBox(Box[][] boxes, Position newPosition, Position actualPosition, Position oldPosition){
+    private static Boolean isAvailableBox(Box[][] boxes, Position newPosition, Position actualPosition){
         
         Boolean result= null;
         try {
         	AvailableBox availableBox = 
         			(AvailableBox) boxes[newPosition.getI()][newPosition.getJ()];
-            result = (availableBox.howManyVsits()<2)&&
-            		!(newPosition.equals(actualPosition));
-            		
-            		//!(actualPosition.equals(oldPosition))&&
-            		//!(oldPosition.equals(newPosition)));
+            result = (availableBox.howManyVsits()<1);
         } catch (Exception e) {
             Printer.show("isInvalidValidBox: Index out of bound");
         }
@@ -50,14 +46,14 @@ public class Validate {
 
     
     
-    public static Boolean isValidMovement(Box[][] boxes, Position newPosition, Position actualPosition, Position oldPosition)
+    public static Boolean isValidMovement(Box[][] boxes, Position newPosition, Position actualPosition)
     {
         Boolean isValidBoundary = (Validate.isValidBoundary(boxes, newPosition));
         Boolean isValidBox=false;
         if(isValidBoundary)
         {
             isValidBox = (Validate.isValidBox(boxes, newPosition, 1)//Wall
-            && Validate.isAvailableBox(boxes, newPosition,actualPosition, oldPosition)//tried
+            && Validate.isAvailableBox(boxes, newPosition,actualPosition)//tried
             && Validate.isValidBox(boxes, newPosition, 2));//start
 
         }
