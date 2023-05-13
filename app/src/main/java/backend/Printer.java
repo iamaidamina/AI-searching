@@ -1,6 +1,8 @@
 package backend;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Printer {
 
@@ -48,6 +50,24 @@ public class Printer {
 	            System.out.println("( "+I+", "+J+" )");
 	     }
 		
+	}
+	
+
+
+	public static void show(Queue<Node> queue) {
+		
+		
+		
+		Integer counter =0;
+		for (Node node: queue) {
+			
+			counter++;
+       
+            System.out.println("-------Node "+(counter)+" -------");
+            System.out.println("Operator: "+node.getOperator());
+            System.out.println("Costo: "+node.getCost());
+            System.out.println("Profundidad: "+node.getDeep());
+     }
 	}
     
 }

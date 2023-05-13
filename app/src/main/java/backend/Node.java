@@ -8,11 +8,12 @@ public class Node {
 	private Integer cost;
 	private String operator;
 	
-	public Node(Environment environtment, Node father, Integer deep, Integer cost) {
+	public Node(Environment environtment, Node father, String operator, Integer deep, Integer cost) {
 		this.environtment = environtment;
 		this.father = father;
 		this.deep = deep;
 		this.cost = cost;
+		this.operator = operator;
 	}
 	public Environment getEnvirontment() {
 		return environtment;

@@ -16,8 +16,12 @@ public class App {
         Printer.show(boxes);
         Agent agent = new Agent("Goku");
         Environment environment = new Environment(boxes);
+        /*
         Search search = new Search(environment, agent);
         search.traverse();
+        */
+        BFS bfs =  new BFS(environment, agent);
+        bfs.traverse();
        
         new MainFrame();
         
