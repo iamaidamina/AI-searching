@@ -67,6 +67,8 @@ public class Validate {
 
     public static Boolean isSolved(Box[][] boxes, Integer id)
     {
+    	//Printer.show("Amout Balls: "+ Locate.getAmountElement(boxes,id));
+    	
         return (Locate.getAmountElement(boxes,id) == 0);
     }
     

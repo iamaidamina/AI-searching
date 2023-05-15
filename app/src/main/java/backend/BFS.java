@@ -6,6 +6,7 @@ import java.util.*;
 public class BFS implements ISearch{
 	
 	private ArrayList<Position> positions;
+	private ArrayList<Position> path;
 	private Queue<Node> queue;
 	private String [] movements;
 	private Environment environment;
@@ -17,6 +18,7 @@ public class BFS implements ISearch{
         this.environment =environment;
         this.movements = movements;
         positions = new ArrayList<>();
+        path = new ArrayList<>();
         queue = new LinkedList<Node>();
 
     }
@@ -28,6 +30,9 @@ public class BFS implements ISearch{
 		 if(Validate.isValidMovement(environment.getBoxes(), newPosition, agentPosition))
 		 {
 			 
+			 
+			 
+			 
 
 			 Node newNode= new  Node(environment, father,operator, father.getDeep()+1, father.getCost()+1);  
 	         queue.add(newNode);
@@ -37,7 +42,6 @@ public class BFS implements ISearch{
 	         Printer.show("Child:  "+newPosition.getI()+" "+newPosition.getJ());
 			 
 		 }
-		
 	      
 	   }
 	 
@@ -66,6 +70,21 @@ public class BFS implements ISearch{
 		}
 		 
 		 return position;
+	 }
+	 
+	 private void  updateNodeCostIfFindEnemy(Node father, Position agentPosition)
+	 {
+		 
+		    if(agent.getAmountCollectedSeeds()>0 && environment.getBoxes()[agentPosition.getI()][agentPosition.getJ()].getId() == Environment.CELL)
+            {
+            	father.setCost(father.getCost()+6);
+            }
+            if(agent.getAmountCollectedSeeds()>0 && environment.getBoxes()[agentPosition.getI()][agentPosition.getJ()].getId() == Environment.FREEZER)
+            {
+            		father.setCost(father.getCost()+3);
+            }
+          
+		 
 	 }
 	    
 	 private Position reverse()
@@ -102,6 +121,7 @@ public class BFS implements ISearch{
 	         {
 	             Printer.show("Success");
 	             Printer.show(environment.getBoxes());
+	             
 	            
 	         }else{
 	             Printer.show("There are not valid movements!");
@@ -127,34 +147,26 @@ public class BFS implements ISearch{
 	        Integer counter = 1;
 
 	  
-	        while(!Validate.isSolved(environment.getBoxes(), 6))
+	        while(!Validate.isSolved(environment.getBoxes(), Environment.DRAGON_BALL))
 	        {
 	        	
 	            Printer.show("******** Iteración: "+ counter+" ************");
 
 	            Printer.show("Father: "+agentPosition.getI()+" "+agentPosition.getJ());
 	            
-	            if(agent.getAmountCollectedSeeds()>0 && environment.getBoxes()[agentPosition.getI()][agentPosition.getJ()].getId() == Environment.CELL)
-	            {
-	            	father.setCost(father.getCost()+6);
-	            }
-	            if(agent.getAmountCollectedSeeds()>0 && environment.getBoxes()[agentPosition.getI()][agentPosition.getJ()].getId() == Environment.FREEZER)
-	            {
-	            		father.setCost(father.getCost()+3);
-	            }
-	          
-	            
+	        
+	            updateNodeCostIfFindEnemy(father, agentPosition);
 	            environment.update(agentPosition, agent);
 	            
-	            
-	            for(int i=0; i<movements.length;i++)
-	            {
-	            	String movement = movements[i];
-	            	doMove(agentPosition, movement ,father);
-	            	
-	            }
 	           
-	            
+	            	for(int i=0; i<movements.length;i++)
+	 	            {
+	 	            	String movement = movements[i];
+	 	            	doMove(agentPosition, movement ,father);
+	 	            	
+	 	            }
+	            	
+	           
 	         /*
 	            if(thereAreValidMovements)
 	            {
@@ -165,23 +177,79 @@ public class BFS implements ISearch{
 	            	
 	            }
 	            
+	           
+	            
 	         */
-	            Printer.show("Antes de borrar");
-	            Printer.show(queue);
-	           queue.remove();
-	           Printer.show("Despues de borrar");
-	           Printer.show(queue);
-	           father =  queue.element();
-	           positions.remove(0);
-	           agentPosition = positions.get(0);
-	            counter++;
+	            	if(!Validate.isSolved(environment.getBoxes(), Environment.DRAGON_BALL))
+	            	{
+	            		   Printer.show(queue);
+	         	          Printer.show(positions);
+	         	            	//Printer.show(queue);
+	         	 	           queue.remove();
+	         	 	           //Printer.show("Despues de borrar");
+	         	 	           //Printer.show(queue);
+	         	 	           father =  queue.element();
+	         	 	           positions.remove(0);
+	         	 	           agentPosition = positions.get(0);
+	         	 	            counter++;
+	            		
+	            	}
+	            //Printer.show("Antes de borrar");
+	       
+	            	
+	          
 	            
 	        }
 	        //path.add(agentPosition);
 	        showFinalResult(thereAreValidMovements);
-	        
-		
+	        Printer.show(queue);
+	        Printer.show(positions);
+	        getPath();
+	        Printer.show(path);
 	}
+	
+	private boolean isStringNull(String str)
+    {
+		 
+        // Compare the string with null
+        // using == relational operator
+        // and return the result
+        if (str == null)
+            return true;
+        else
+            return false;
+    }
+	
+	public void getPath()
+	{
+		
+	
+		Node node = queue.element();
+		String operator = node.getOperator();
+		Position agentPosition = positions.get(0);
+		path.add(agentPosition);
+		while(!Objects.equals(operator, null))
+		{
+		
+			
+			try {
+				node = node.getFather();
+				operator = node.getOperator();
+				agentPosition = getNewPosition(operator, agentPosition);
+				//Re-interpretación: de las instrucciones left, right, down,up y hacer validación
+				path.add(agentPosition);
+				
+				
+			}catch(Exception e)
+			{
+				
+			}
+			
+			
+		}
+	}
+	
+
 	
 	
 
