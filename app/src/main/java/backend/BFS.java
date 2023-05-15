@@ -4,16 +4,19 @@ package backend;
 import java.util.*;
 
 public class BFS implements ISearch{
-	private ArrayList<Position> path;
+	
+	private ArrayList<Position> positions;
 	private Queue<Node> queue;
+	private String [] movements;
 	private Environment environment;
 	private Agent agent;
 	
-	public BFS(Environment environment, Agent agent)
+	public BFS(Environment environment, Agent agent, String []movements)
     {
         this.agent = agent;
         this.environment =environment;
-        path = new ArrayList<>();
+        this.movements = movements;
+        positions = new ArrayList<>();
         queue = new LinkedList<Node>();
 
     }
@@ -25,27 +28,17 @@ public class BFS implements ISearch{
 		 if(Validate.isValidMovement(environment.getBoxes(), newPosition, agentPosition))
 		 {
 			 
-			 
-			 
-			 environment.update(newPosition, agent);
-	        // path.add(agentPosition);
-			 
-			 agentPosition= newPosition;
-	         //-----------------NUEVO--------------------
-			 Printer.show("HOLA"+operator+father.getDeep()+1+father.getCost()+1);
+
 			 Node newNode= new  Node(environment, father,operator, father.getDeep()+1, father.getCost()+1);  
 	         queue.add(newNode);
-	         father = newNode;
+	         positions.add(newPosition);
 	         //-----------------NUEVO---------------
 	         Printer.show("Agent move "+ operator);
-	         Printer.show("Child:  "+agentPosition.getI()+" "+agentPosition.getJ());
+	         Printer.show("Child:  "+newPosition.getI()+" "+newPosition.getJ());
 			 
 		 }
 		
 	      
-	                 
-	                  
-
 	   }
 	 
 	 
@@ -80,11 +73,11 @@ public class BFS implements ISearch{
 	    	 Position leftPosition = null, rigthPosition = null, upPosition = null, downPosition = null;
 	    	 Boolean leftIsValid =false, rightIsValid =false, upIsValid =false, downIsValid =false;
 	    	 Boolean isValid=leftIsValid ||rightIsValid || upIsValid || downIsValid;
-	    	 int i= path.size()-1;
+	    	 int i= positions.size()-1;
 	    	 Position agentPosition = null;
 	    	 while (!isValid && i>=0) 
 	         {
-	    		 agentPosition = path.get(i);
+	    		 agentPosition = positions.get(i);
 	    		 
 	    		 
 	    		 leftPosition = agent.propuseMove(agentPosition, new Position(0, -1));//left
@@ -126,95 +119,41 @@ public class BFS implements ISearch{
 		 
 		 Node father = new  Node(environment, null,null,0, 0);
 		 queue.add(father);//Nuevo
+		 positions.add(agentPosition);
 		 
 	        
 	        Boolean thereAreValidMovements = true;
 
 	        Integer counter = 1;
 
-	      //!Validate.isSolved(environment.getBoxes(), 6) && thereAreValidMovements
-	        while(counter <=1)
+	  
+	        while(!Validate.isSolved(environment.getBoxes(), 6))
 	        {
 	        	
-	            Printer.show("Iteración: "+ counter);
+	            Printer.show("******** Iteración: "+ counter+" ************");
 
 	            Printer.show("Father: "+agentPosition.getI()+" "+agentPosition.getJ());
-	            //leftPosition = agent.propuseMove(agentPosition, new Position(0, -1));//left
-	           // rigthPosition = agent.propuseMove(agentPosition, new Position(0, 1));//right
-	            //upPosition = agent.propuseMove(agentPosition, new Position(-1, 0));//up
-	            //downPosition = agent.propuseMove(agentPosition, new Position(1, 0));//down
 	            
-
+	            if(agent.getAmountCollectedSeeds()>0 && environment.getBoxes()[agentPosition.getI()][agentPosition.getJ()].getId() == Environment.CELL)
+	            {
+	            	father.setCost(father.getCost()+6);
+	            }
+	            if(agent.getAmountCollectedSeeds()>0 && environment.getBoxes()[agentPosition.getI()][agentPosition.getJ()].getId() == Environment.FREEZER)
+	            {
+	            		father.setCost(father.getCost()+3);
+	            }
+	          
 	            
-	            doMove(agentPosition, "right" ,father);
-	            /*
-	            if(Validate.isValidMovement(environment.getBoxes(), rigthPosition, agentPosition))
-	            {
-	            	doMove(agentPosition, rigthPosition, father);
-	            	
-	            	
-	                doMove(agentPosition, rigthPosition, agent);
-	                agentPosition= rigthPosition;
-	                //-----------------NUEVO--------------------
-	                rigthNode= new  Node(environment, father,"rigth", father.getDeep()+1, father.getCost()+1);  
-	                queue.add(rigthNode);
-	                father = rigthNode;
-	                //-----------------NUEVO---------------
-	                Printer.show("Agent move rigth");
-	                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
-					
-	            }
-	            */
-	            doMove(agentPosition, "up" ,father);
-	            /*
-	            if(Validate.isValidMovement(environment.getBoxes(), upPosition, agentPosition))
-	            {
-	                doMove(agentPosition, upPosition, agent);
-	                agentPosition= upPosition;
-	                //-----------------NUEVO--------------------
-	                upNode= new  Node(environment, father,"up" ,father.getDeep()+1, father.getCost()+1);  
-	                queue.add(upNode);
-	                father = upNode;
-	                //-----------------NUEVO---------------
-	                Printer.show("Agent move up");
-	                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
-
-	            }
-	            */
+	            environment.update(agentPosition, agent);
 	            
-	            doMove(agentPosition, "down" ,father);
-	            /*
-	            if(Validate.isValidMovement(environment.getBoxes(), downPosition, agentPosition))
+	            
+	            for(int i=0; i<movements.length;i++)
 	            {
-	                doMove(agentPosition, downPosition, agent);
-	                agentPosition= downPosition;
-	              //-----------------NUEVO--------------------
-	                downNode= new  Node(environment, father,"down" ,father.getDeep()+1, father.getCost()+1);  
-	                queue.add(downNode);
-	                father = downNode;
-	                //-----------------NUEVO---------------
-	                Printer.show("Agent move down");
-	                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
-
-	            }
-	            */
-	            doMove(agentPosition, "left" ,father);
-	            /*
-	            if(Validate.isValidMovement(environment.getBoxes(), leftPosition, agentPosition))
-	            {
+	            	String movement = movements[i];
+	            	doMove(agentPosition, movement ,father);
 	            	
-	                doMove(agentPosition, leftPosition, agent);
-	                agentPosition= leftPosition;
-	              //-----------------NUEVO--------------------
-	                leftNode= new  Node(environment, father,"left",father.getDeep()+1, father.getCost()+1);  
-	                queue.add(leftNode);
-	                father = leftNode;
-	                //-----------------NUEVO---------------
-	                Printer.show("Agent move left");
-	                Printer.show("Posicion nueva Agente: "+agentPosition.getI()+" "+agentPosition.getJ());
-
 	            }
-	             */ 
+	           
 	            
 	         /*
 	            if(thereAreValidMovements)
@@ -227,12 +166,20 @@ public class BFS implements ISearch{
 	            }
 	            
 	         */
+	            Printer.show("Antes de borrar");
+	            Printer.show(queue);
+	           queue.remove();
+	           Printer.show("Despues de borrar");
+	           Printer.show(queue);
+	           father =  queue.element();
+	           positions.remove(0);
+	           agentPosition = positions.get(0);
 	            counter++;
 	            
 	        }
 	        //path.add(agentPosition);
 	        showFinalResult(thereAreValidMovements);
-	        Printer.show(queue);
+	        
 		
 	}
 	

@@ -13,14 +13,15 @@ public class App {
        
         String sourceStr =  FileManager.upload("Prueba1.txt");
         Box [][] boxes =Convert.stringToBox2DArray(sourceStr);
-        Printer.show(boxes);
+        //Printer.show(boxes);
         Agent agent = new Agent("Goku");
         Environment environment = new Environment(boxes);
+        String [] movements= {"right", "up", "left","down"};
         /*
         Search search = new Search(environment, agent);
         search.traverse();
         */
-        BFS bfs =  new BFS(environment, agent);
+        BFS bfs =  new BFS(environment, agent, movements);
         bfs.traverse();
        
         new MainFrame();

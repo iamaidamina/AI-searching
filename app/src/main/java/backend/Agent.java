@@ -5,6 +5,8 @@ public class Agent {
   
     private String name;
     private Integer amountCollectedSeeds;
+    
+
 
     public Agent(String name) {
        
