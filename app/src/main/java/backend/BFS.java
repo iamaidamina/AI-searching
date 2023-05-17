@@ -25,6 +25,7 @@ public class BFS implements ISearch{
 	
 	 private void doMove(Position agentPosition, String operator, Node father)
 	 {
+		 
 		 Position newPosition = getNewPosition(operator, agentPosition);
 		 
 		 if(Validate.isValidMovement(environment.getBoxes(), newPosition, agentPosition))
@@ -97,7 +98,7 @@ public class BFS implements ISearch{
 		}else
 		if(operator.equalsIgnoreCase("down"))
 		{
-			System.out.println("DOWN");
+			
 			position =agent.propuseMove(agentPosition, new Position(-1, 0));
 		}else
 		{
@@ -169,7 +170,7 @@ public class BFS implements ISearch{
 
 	@Override
 	public void traverse() {
-		 Position agentPosition = Locate.getPosition(environment.getBoxes(),2);//Borrar
+		 Position agentPosition = Locate.getPosition(environment.getBoxes(),Environment.START);//Borrar
 
 		 
 		 Node father = new  Node(environment, null,null,0, 0);
@@ -181,7 +182,7 @@ public class BFS implements ISearch{
 
 	        Integer counter = 1;
 
-	        //!Validate.isSolved(environment.getBoxes(), Environment.DRAGON_BALL)
+	        
 	        while(!Validate.isSolved(environment.getBoxes(), Environment.DRAGON_BALL))
 	        {
 	        	

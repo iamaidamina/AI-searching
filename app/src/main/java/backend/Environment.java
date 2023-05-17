@@ -11,6 +11,7 @@ public class Environment {
     public static final Integer CELL =4;
     public static final Integer SEED =5;
     public static final Integer DRAGON_BALL =6;
+    public static final Integer START =2;
 
    
 
