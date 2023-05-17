@@ -13,6 +13,7 @@ public class App {
        
         String sourceStr =  FileManager.upload("Prueba1.txt");
         Box [][] boxes =Convert.stringToBox2DArray(sourceStr);
+        Box [][] copyBoxes =Convert.stringToBox2DArray(sourceStr);
         //Printer.show(boxes);
         Agent agent = new Agent("Goku");
         Environment environment = new Environment(boxes);
@@ -23,6 +24,7 @@ public class App {
         */
         BFS bfs =  new BFS(environment, agent, movements);
         bfs.traverse();
+        //bfs.getPath(copyBoxes);
        
         new MainFrame();
         

@@ -90,7 +90,10 @@ public class Environment {
     }
     
 
-
+    public Box[][] setBoxes(Box[][] boxes) {
+        return this.boxes = boxes;
+    }
+    
     public Box[][] getBoxes() {
         return boxes;
     }

@@ -35,5 +35,7 @@ public class Node {
 	public void setCost(Integer cost) {
 		this.cost = cost;
 	}
+	
+
 
 }

@@ -1,5 +1,9 @@
 package backend;
 
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Queue;
+
 public class Validate {
 
 
@@ -70,6 +74,30 @@ public class Validate {
     	//Printer.show("Amout Balls: "+ Locate.getAmountElement(boxes,id));
     	
         return (Locate.getAmountElement(boxes,id) == 0);
+    }
+    
+    
+    public static Boolean isCreated(ArrayList<Position> path, Position position)
+    {
+    	Boolean isCreated= false;
+    	int index =0;
+    	
+    	while (index < path.size() && !isCreated) {
+    		
+    		
+    		Position createdPosition = path.get(index);
+    		isCreated = createdPosition.getI() == position.getI() &&
+    				createdPosition.getJ() == position.getJ();
+    		
+    		if(isCreated)
+    		{
+    			System.out.println("Repetidas "+createdPosition.getI()+""+createdPosition.getJ()+"\n"+position.getI()+" "+position.getJ());
+    		}
+    		
+    		index++;
+           
+    	}
+    	return isCreated;
     }
     
 }
